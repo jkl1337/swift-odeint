@@ -1,19 +1,30 @@
-name: Swift
+name: Swift CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
-  build:
-
-    runs-on: macos-latest
+  test:
+    name: Run Unit Tests on macOS and Linux
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+        swift: ["5.9", "5.10", "6.0"]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build
-      run: swift build -v
-    - name: Run tests
-      run: swift test -v
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Swift ${{ matrix.swift }}
+        uses: NeedleInAJayStack/setup-swift@feat/swift-6
+        with:
+          swift-version: ${{ matrix.swift }}
+
+      - name: Build and Run Tests
+        run: |
+          swift build --enable-test-discovery
+          swift test
