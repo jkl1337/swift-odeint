@@ -6,7 +6,7 @@ public static func integrate(over ts: Array<Self.Scalar>, y0: Self, tol: Self.Sc
                dydx: @escaping (Self, Self.Scalar) -> Self) -> Array<Self> {
   let n = ts.count
   return Array<Self>(unsafeUninitializedCapacity: n) { buffer, initializedCount in
-    initializedCount = explicitRungeKutta(tableau: DormondPrice<Scalar>(), ys: &buffer, ts:
+    initializedCount = explicitRungeKutta(tableau: DormandPrince<Scalar>(), ys: &buffer, ts:
                                             ts, y0: y0, dydx: dydx, tol: tol)
   }
 }

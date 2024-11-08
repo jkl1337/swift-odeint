@@ -1,6 +1,6 @@
 import Numerics
 
-struct DormondPrice<Scalar: Real & BinaryFloatingPoint>: ButchersTableau {
+struct DormandPrince<Scalar: Real & BinaryFloatingPoint>: ButchersTableau {
   typealias Scalar = Scalar
   let stages = 7
   let order = 5
